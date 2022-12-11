@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/hadith_data_provider.dart';
+import '../providers/list_of_chapter_provider.dart';
+import '../providers/translation_data_provider.dart';
 import '../providers/verse_no_provider.dart';
 
 class PrevVerseButton extends StatelessWidget {
@@ -11,13 +12,14 @@ class PrevVerseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verseNoProvider = Provider.of<VerseNoProvider>(context);
-    final hadithData = Provider.of<HadithDataProvider>(context);
+    final translationProviderObject = Provider.of<TranslationDataProvider>(context);
+    final listOfChapterProviderObj = Provider.of<ListOfChapterProvider>(context);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
         verseNoProvider.decreaseVerseNo();
-        hadithData.getData(verseNoProvider.verseNo);
+        translationProviderObject.getData(verseNoProvider.verseNo,listOfChapterProviderObj.chapterNo);
       },
       child: Container(
         alignment: Alignment.center,
@@ -27,21 +29,14 @@ class PrevVerseButton extends StatelessWidget {
             color: Color(0xffFFFFFF),
             borderRadius: const BorderRadius.all(Radius.circular(50)
             ),
-           boxShadow: [
-             BoxShadow(
-               blurRadius: screenHeight*(5/800),
-                 color: Color(0xffCACACA),
-                 spreadRadius: screenHeight*(1/800)
-             ),
-           ]
 
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * (47 / screenWidth)),
+              horizontal: screenWidth * (40 / 360)),
           child: Text(
             "Prev Verse",
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
                 fontSize: screenHeight * (16 / screenHeight),
                 fontWeight: FontWeight.w500,
                 color: const Color(0xff6C6C6C)),

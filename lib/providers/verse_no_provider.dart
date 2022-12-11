@@ -10,6 +10,10 @@ class VerseNoProvider with ChangeNotifier{
     _verseNo++;
   }
   void decreaseVerseNo(){
-    _verseNo--;
+    if(_verseNo!=1){_verseNo--;}
+  }
+
+  set verseNo(int value) {
+    _verseNo = value;
   }
 }
