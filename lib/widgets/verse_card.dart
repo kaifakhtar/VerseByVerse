@@ -5,6 +5,7 @@ import 'package:verse_by_verse/modals/translation.dart';
 import 'package:verse_by_verse/providers/translation_data_provider.dart';
 import 'package:verse_by_verse/providers/verse_no_provider.dart';
 import 'package:verse_by_verse/services/remote_services.dart';
+import 'package:verse_by_verse/widgets/shimmer_loading.dart';
 
 import '../providers/list_of_chapter_provider.dart';
 import 'drop_down_for_chapters.dart';
@@ -17,7 +18,7 @@ class VerseCard extends StatefulWidget {
 }
 
 class _VerseCardState extends State<VerseCard> {
-  TranslationDataProvider? hadith_data;
+  TranslationDataProvider? translationDataProviderObj;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class _VerseCardState extends State<VerseCard> {
     final listOfChapterProviderObj = Provider.of<ListOfChapterProvider>(context);
     var cardHeight = screenHeight * (630 / 800);
     var cardWidth = screenWidth * 0.9055;
-    hadith_data = Provider.of<TranslationDataProvider>(context);
+    translationDataProviderObj = Provider.of<TranslationDataProvider>(context);
     final verseNoProviderObj = Provider.of<VerseNoProvider>(context);
 
     return Container(
@@ -69,7 +70,7 @@ class _VerseCardState extends State<VerseCard> {
                           padding: EdgeInsets.symmetric(
                               horizontal: cardWidth * (10 / cardWidth),
                               vertical: cardWidth * (10 / cardWidth)),
-                          child: ChaptersDropdown(),
+                          child: const ChaptersDropdown(),
                         ),
                       ),
                     ),
@@ -81,7 +82,7 @@ class _VerseCardState extends State<VerseCard> {
                   height: screenHeight * (34 / 800),
                   decoration: const BoxDecoration(
                     color: Color(0xffDAE6FF),
-                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    borderRadius: const BorderRadius.all(Radius.circular(50)), //TODO: change this to relative format
                   ),
                   child: FittedBox(
                     child: Padding(
@@ -99,12 +100,13 @@ class _VerseCardState extends State<VerseCard> {
                   ),
                 ),
                 SizedBox(height: cardHeight * (40/cardHeight)),
-                Text(
-                  hadith_data?.hadithData?.data?[0].text.toString() ??
-                      "Loading...",
+
+                translationDataProviderObj?.isloading==true?ShimmerEffect():Text(
+                  translationDataProviderObj?.hadithData?.data?[0].text.toString() ??
+                      "No data",
                   softWrap: true,
                   style: GoogleFonts.literata(fontWeight: FontWeight.w500,
-                     color: Color(0xff515151),
+                     color: const Color(0xff515151),
                      fontSize: cardHeight * (20 / cardHeight), height: 1.55),
                 )
               ],
