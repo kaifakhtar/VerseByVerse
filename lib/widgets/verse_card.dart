@@ -8,7 +8,6 @@ import 'package:verse_by_verse/services/remote_services.dart';
 import 'package:verse_by_verse/view_model/home_viewModal.dart';
 import 'package:verse_by_verse/widgets/shimmer_loading.dart';
 
-import '../providers/list_of_chapter_provider.dart';
 import 'drop_down_for_chapters.dart';
 
 class VerseCard extends StatefulWidget {

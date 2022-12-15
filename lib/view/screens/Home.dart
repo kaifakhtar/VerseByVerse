@@ -7,11 +7,10 @@ import 'package:verse_by_verse/widgets/popUpmenu.dart';
 import 'package:verse_by_verse/widgets/prev_verse_button.dart';
 import 'package:verse_by_verse/widgets/verse_card.dart';
 
-import '../modals/translation.dart';
-import '../providers/translation_data_provider.dart';
-import '../providers/list_of_chapter_provider.dart';
-import '../services/remote_services.dart';
-import '../view_model/home_viewModal.dart';
+import '../../modals/translation.dart';
+import '../../providers/translation_data_provider.dart';
+import '../../view_model/home_viewModal.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 

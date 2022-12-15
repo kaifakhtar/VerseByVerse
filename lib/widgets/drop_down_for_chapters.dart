@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:verse_by_verse/providers/list_of_chapter_provider.dart';
+
 import 'package:verse_by_verse/view_model/home_viewModal.dart';
 
 import '../modals/ChaptersList.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/list_of_chapter_provider.dart';
+
 import '../providers/translation_data_provider.dart';
 import '../providers/verse_no_provider.dart';
 import '../view_model/home_viewModal.dart';
