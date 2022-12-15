@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:verse_by_verse/widgets/next_verse_button.dart';
+import 'package:verse_by_verse/widgets/popUpmenu.dart';
 import 'package:verse_by_verse/widgets/prev_verse_button.dart';
 import 'package:verse_by_verse/widgets/verse_card.dart';
 
@@ -10,6 +11,7 @@ import '../modals/translation.dart';
 import '../providers/translation_data_provider.dart';
 import '../providers/list_of_chapter_provider.dart';
 import '../services/remote_services.dart';
+import '../view_model/home_viewModal.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -39,6 +41,8 @@ class _HomeState extends State<Home> {
         title: Text("VerseByVerse",
         style: GoogleFonts.poppins(),),
         backgroundColor: Color(0xff2B5BBB),
+        actions: [PopUp()],
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,9 +72,9 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final listOfChapterProviderObj=Provider.of<ListOfChapterProvider>(context,listen: false);
-      listOfChapterProviderObj.getData();
-      Provider.of<TranslationDataProvider>(context,listen: false).getData(verseCount, listOfChapterProviderObj.chapterNo);
+      final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context,listen: false);
+      homeChapterListViewModalObj.fetchChapterListApi();
+      Provider.of<TranslationDataProvider>(context,listen: false).getData(verseCount, homeChapterListViewModalObj.chapterNo);
     });
   }
 

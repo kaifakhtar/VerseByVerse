@@ -15,15 +15,16 @@ class TranslationDataProvider with ChangeNotifier{
   bool get isloading => _isloading;
 
   void getData(verseCount,chapterNo) async{
-    toggleloading();
+    _isloading=true;
+    notifyListeners();
     _translationObject=await RemoteService().getVerse(verseCount,chapterNo);
-    toggleloading();
+    _isloading=false;
     notifyListeners();
   }
   void getDatabyChapterNo(chapterNo) async{
-    toggleloading();
+    _isloading=true;
     _translationObject=await RemoteService().getVerseByChapterNo(chapterNo);
-    toggleloading();
+    _isloading=false;
     notifyListeners();
   }
  void toggleloading(){

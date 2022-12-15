@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:verse_by_verse/providers/list_of_chapter_provider.dart';
+import 'package:verse_by_verse/view_model/home_viewModal.dart';
 
 import '../modals/ChaptersList.dart';
 import '../providers/translation_data_provider.dart';
@@ -16,13 +17,13 @@ class ChaptersDropdown extends StatefulWidget {
 }
 
 class _ChaptersDropdownState extends State<ChaptersDropdown> {
-  ListOfChapterProvider? listOfChaptersBox;
+  HomeChapterListViewModel? homeChapterListViewModel;
 
   //String? selectedItem="jjjj";
   List<String?>? chapters;
 
   void getDataOnBuid() async {
-    listOfChaptersBox?.getData();
+    homeChapterListViewModel?.fetchChapterListApi();
   }
 
   @override
@@ -40,7 +41,7 @@ class _ChaptersDropdownState extends State<ChaptersDropdown> {
     var cardWidth = screenWidth * 0.9055;
     final verseNoProviderObj = Provider.of<VerseNoProvider>(context);
     final translationProviderObject = Provider.of<TranslationDataProvider>(context);
-    return Consumer<ListOfChapterProvider>(
+    return Consumer<HomeChapterListViewModel>(
       builder: (BuildContext context, value, Widget? child) {
         return DropdownButtonHideUnderline(
           child: DropdownButton2<String>(

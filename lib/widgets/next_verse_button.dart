@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/translation_data_provider.dart';
 import '../providers/list_of_chapter_provider.dart';
 import '../providers/verse_no_provider.dart';
+import '../view_model/home_viewModal.dart';
 
 class NextVerseButton extends StatelessWidget {
   const NextVerseButton({Key? key}) : super(key: key);
@@ -12,14 +13,14 @@ class NextVerseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verseNoProvider = Provider.of<VerseNoProvider>(context);
-    final listOfChapterProviderObj = Provider.of<ListOfChapterProvider>(context);
+    final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context);
     final translationProviderObject = Provider.of<TranslationDataProvider>(context);
     var screenHeight=MediaQuery.of(context).size.height;
     var screenWidth=MediaQuery.of(context).size.width;
     return InkWell(
       onTap: (){
           verseNoProvider.increaseVerseNo();
-          translationProviderObject.getData(verseNoProvider.verseNo,listOfChapterProviderObj.chapterNo);
+          translationProviderObject.getData(verseNoProvider.verseNo,homeChapterListViewModalObj.chapterNo);
       },
       child: Container(alignment: Alignment.center,
        // width: screenWidth*(154/screenWidth),

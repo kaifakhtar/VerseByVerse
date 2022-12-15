@@ -5,6 +5,7 @@ import 'package:verse_by_verse/modals/translation.dart';
 import 'package:verse_by_verse/providers/translation_data_provider.dart';
 import 'package:verse_by_verse/providers/verse_no_provider.dart';
 import 'package:verse_by_verse/services/remote_services.dart';
+import 'package:verse_by_verse/view_model/home_viewModal.dart';
 import 'package:verse_by_verse/widgets/shimmer_loading.dart';
 
 import '../providers/list_of_chapter_provider.dart';
@@ -24,7 +25,7 @@ class _VerseCardState extends State<VerseCard> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    final listOfChapterProviderObj = Provider.of<ListOfChapterProvider>(context);
+    final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context);
     var cardHeight = screenHeight * (630 / 800);
     var cardWidth = screenWidth * 0.9055;
     translationDataProviderObj = Provider.of<TranslationDataProvider>(context);
@@ -51,7 +52,7 @@ class _VerseCardState extends State<VerseCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "${listOfChapterProviderObj.chapterNo?? "0"}:${verseNoProviderObj.verseNo}",
+                      "${homeChapterListViewModalObj.chapterNo?? "0"}:${verseNoProviderObj.verseNo}",
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: cardHeight * 0.05079365,
