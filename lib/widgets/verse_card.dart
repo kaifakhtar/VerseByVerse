@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:verse_by_verse/data/response/status.dart';
 import 'package:verse_by_verse/modals/translation.dart';
-import 'package:verse_by_verse/providers/translation_data_provider.dart';
-import 'package:verse_by_verse/providers/verse_no_provider.dart';
-import 'package:verse_by_verse/services/remote_services.dart';
-import 'package:verse_by_verse/view_model/home_viewModal.dart';
+//import 'package:verse_by_verse/providers/translation_data_provider.dart';
+import 'package:verse_by_verse/view_model/HomeScreen_View_modals/verse_no_provider.dart';
+
+import 'package:verse_by_verse/view_model/HomeScreen_View_modals/Translation_data_view_modal.dart';
+import 'package:verse_by_verse/view_model/HomeScreen_View_modals/chapterListviewModal.dart';
 import 'package:verse_by_verse/widgets/shimmer_loading.dart';
 
 import 'drop_down_for_chapters.dart';
@@ -18,7 +20,7 @@ class VerseCard extends StatefulWidget {
 }
 
 class _VerseCardState extends State<VerseCard> {
-  TranslationDataProvider? translationDataProviderObj;
+  TranslationDataViewModal? translationDataViewModal;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class _VerseCardState extends State<VerseCard> {
     final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context);
     var cardHeight = screenHeight * (630 / 800);
     var cardWidth = screenWidth * 0.9055;
-    translationDataProviderObj = Provider.of<TranslationDataProvider>(context);
+    translationDataViewModal = Provider.of<TranslationDataViewModal>(context);
     final verseNoProviderObj = Provider.of<VerseNoProvider>(context);
 
     return Container(
@@ -101,8 +103,8 @@ class _VerseCardState extends State<VerseCard> {
                 ),
                 SizedBox(height: cardHeight * (40/cardHeight)),
 
-                translationDataProviderObj?.isloading==true?ShimmerEffect():Text(
-                  translationDataProviderObj?.hadithData?.data?[0].text.toString() ??
+                translationDataViewModal?.translationDataResponse.status==Status.LOADING?ShimmerEffect():Text(
+                  translationDataViewModal?.translationDataResponse.data?.data?[0].text.toString() ??
                       "No data",
                   softWrap: true,
                   style: GoogleFonts.literata(fontWeight: FontWeight.w500,

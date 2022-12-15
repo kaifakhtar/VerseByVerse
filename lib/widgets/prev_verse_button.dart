@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 
-import '../providers/translation_data_provider.dart';
-import '../providers/verse_no_provider.dart';
-import '../view_model/home_viewModal.dart';
+import '../view_model/HomeScreen_View_modals/verse_no_provider.dart';
+import '../view_model/HomeScreen_View_modals/Translation_data_view_modal.dart';
+import '../view_model/HomeScreen_View_modals/chapterListviewModal.dart';
 
 class PrevVerseButton extends StatelessWidget {
   const PrevVerseButton({Key? key}) : super(key: key);
@@ -13,14 +13,14 @@ class PrevVerseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verseNoProvider = Provider.of<VerseNoProvider>(context);
-    final translationProviderObject = Provider.of<TranslationDataProvider>(context);
+    final translationProviderObject = Provider.of<TranslationDataViewModal>(context);
     final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context);
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
         verseNoProvider.decreaseVerseNo();
-        translationProviderObject.getData(verseNoProvider.verseNo,homeChapterListViewModalObj.chapterNo);
+        translationProviderObject.fetchTranslationDataByBothApi(homeChapterListViewModalObj.chapterNo??1,verseNoProvider.verseNo,);
       },
       child: Container(
         alignment: Alignment.center,

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/translation_data_provider.dart';
 
-import '../providers/verse_no_provider.dart';
-import '../view_model/home_viewModal.dart';
+
+import '../view_model/HomeScreen_View_modals/verse_no_provider.dart';
+import '../view_model/HomeScreen_View_modals/Translation_data_view_modal.dart';
+import '../view_model/HomeScreen_View_modals/chapterListviewModal.dart';
 
 class NextVerseButton extends StatelessWidget {
   const NextVerseButton({Key? key}) : super(key: key);
@@ -14,13 +15,13 @@ class NextVerseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final verseNoProvider = Provider.of<VerseNoProvider>(context);
     final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context);
-    final translationProviderObject = Provider.of<TranslationDataProvider>(context);
+    final translationDataViewModal = Provider.of<TranslationDataViewModal>(context);
     var screenHeight=MediaQuery.of(context).size.height;
     var screenWidth=MediaQuery.of(context).size.width;
     return InkWell(
       onTap: (){
           verseNoProvider.increaseVerseNo();
-          translationProviderObject.getData(verseNoProvider.verseNo,homeChapterListViewModalObj.chapterNo);
+          translationDataViewModal.fetchTranslationDataByBothApi(homeChapterListViewModalObj.chapterNo??1,verseNoProvider.verseNo,);
       },
       child: Container(alignment: Alignment.center,
        // width: screenWidth*(154/screenWidth),

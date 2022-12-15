@@ -8,8 +8,9 @@ import 'package:verse_by_verse/widgets/prev_verse_button.dart';
 import 'package:verse_by_verse/widgets/verse_card.dart';
 
 import '../../modals/translation.dart';
-import '../../providers/translation_data_provider.dart';
-import '../../view_model/home_viewModal.dart';
+
+import '../../view_model/HomeScreen_View_modals/Translation_data_view_modal.dart';
+import '../../view_model/HomeScreen_View_modals/chapterListviewModal.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final homeChapterListViewModalObj = Provider.of<HomeChapterListViewModel>(context,listen: false);
       homeChapterListViewModalObj.fetchChapterListApi();
-      Provider.of<TranslationDataProvider>(context,listen: false).getData(verseCount, homeChapterListViewModalObj.chapterNo);
+      Provider.of<TranslationDataViewModal>(context,listen: false).fetchTranslationDataByBothApi(homeChapterListViewModalObj.chapterNo??1,verseCount);
     });
   }
 

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'package:verse_by_verse/view_model/home_viewModal.dart';
+import 'package:verse_by_verse/view_model/HomeScreen_View_modals/chapterListviewModal.dart';
 
 import '../modals/ChaptersList.dart';
-import '../providers/translation_data_provider.dart';
-import '../providers/verse_no_provider.dart';
+
+import '../view_model/HomeScreen_View_modals/verse_no_provider.dart';
+import '../view_model/HomeScreen_View_modals/Translation_data_view_modal.dart';
 
 class ChaptersDropdown extends StatefulWidget {
   const ChaptersDropdown({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _ChaptersDropdownState extends State<ChaptersDropdown> {
     var cardHeight = screenHeight * (630 / 800);
     var cardWidth = screenWidth * 0.9055;
     final verseNoProviderObj = Provider.of<VerseNoProvider>(context);
-    final translationProviderObject = Provider.of<TranslationDataProvider>(context);
+    final translationProviderObject = Provider.of<TranslationDataViewModal>(context);
     return Consumer<HomeChapterListViewModel>(
       builder: (BuildContext context, value, Widget? child) {
         return DropdownButtonHideUnderline(
