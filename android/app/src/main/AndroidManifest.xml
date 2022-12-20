@@ -2,9 +2,9 @@
     package="com.example.verse_by_verse">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="verse_by_verse"
+        android:label="VerseByVerse"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
