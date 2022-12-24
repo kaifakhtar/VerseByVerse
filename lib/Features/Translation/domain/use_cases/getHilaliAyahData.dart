@@ -14,7 +14,8 @@ class GetHilaliAyahData {
 
   GetHilaliAyahData(this._translationRepository);
 
-  Future<Either<Failure,AyahDataEntity>> call()async{
-    return await _translationRepository.getHilaliAyahData();
+  Future<Either<Failure,AyahDataEntity>> call({required int chapterNo,required int versoNo})async{
+    return await _translationRepository.getHilaliAyahData(chapterNo: chapterNo,verseNo: versoNo);
   }
+
 }

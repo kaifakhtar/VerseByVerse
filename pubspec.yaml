@@ -41,6 +41,8 @@ dependencies:
   rename: ^2.0.1
   dartz: ^0.10.1
   http: ^0.13.5
+  flutter_screenutil: ^5.6.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -103,9 +105,9 @@ flutter:
     - family: Uthmani_font
       fonts:
        - asset: fonts/Uthmanic_Script_HAFS_Regular.ttf
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: Uthmani_font_naksh
+      fonts:
+        - asset: fonts/me_quran_Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

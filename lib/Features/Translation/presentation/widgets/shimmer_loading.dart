@@ -16,8 +16,8 @@ class _ShimmerEffectState extends State<ShimmerEffect> {
       children: [
         Shimmer.fromColors(
           period: Duration(milliseconds: 500),
-            baseColor: Color(0xffDAE6FF)!,
-            highlightColor: Colors.white!,
+            baseColor: Color(0xffDAE6FF),
+            highlightColor: Colors.white,
             child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -27,8 +27,8 @@ class _ShimmerEffectState extends State<ShimmerEffect> {
         SizedBox(height: 20),
         Shimmer.fromColors(
             period: Duration(milliseconds: 500),
-            baseColor: Color(0xffDAE6FF)!,
-            highlightColor: Colors.white!,
+            baseColor: Color(0xffDAE6FF),
+            highlightColor: Colors.white,
             child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -37,8 +37,8 @@ class _ShimmerEffectState extends State<ShimmerEffect> {
         SizedBox(height: 20),
         Shimmer.fromColors(
             period: Duration(milliseconds: 500),
-            baseColor: Color(0xffDAE6FF)!,
-            highlightColor: Colors.white!,
+            baseColor: Color(0xffDAE6FF),
+            highlightColor: Colors.white,
             child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -64,6 +64,47 @@ class _ShimmerEffectState extends State<ShimmerEffect> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(100))
                 ),height:15,width: 400)),
+
+        const SizedBox(height: 80),
+        Shimmer.fromColors(
+            period: const Duration(milliseconds: 500),
+            baseColor: AppColors.lightBlueColor,
+            highlightColor: Colors.white,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(100))
+                ),height:15,width: 500)),
+        const SizedBox(height: 20),
+        Shimmer.fromColors(
+            period: const Duration(milliseconds: 500),
+            baseColor: AppColors.lightBlueColor,
+            highlightColor: Colors.white,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(100))
+                ),height:15,width: 600)),
+        const SizedBox(height: 20),
+        Shimmer.fromColors(
+            period: const Duration(milliseconds: 500),
+            baseColor: AppColors.lightBlueColor,
+            highlightColor: Colors.white,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(100))
+                ),height:15,width: 300)),
+        const SizedBox(height: 20),
+        Shimmer.fromColors(
+            period: const Duration(milliseconds: 500),
+            baseColor: AppColors.lightBlueColor,
+            highlightColor: Colors.white,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(100))
+                ),height:15,width: 200)),
 
 
       ],

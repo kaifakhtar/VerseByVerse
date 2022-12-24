@@ -1,5 +1,6 @@
 
 import 'package:dartz/dartz.dart';
+import 'package:verse_by_verse/Features/Translation/domain/entities/Chapter_list_data_entity.dart';
 
 import 'package:verse_by_verse/core/errors/failure.dart';
 import 'package:verse_by_verse/core/network/network_info.dart';
@@ -19,18 +20,37 @@ class TranslationRepositoryImpl implements TranslationRepository{
 
 
 
+
+
   @override
-  Future<Either<Failure, AyahDataEntity>> getHilaliAyahData()async {
+  Future<Either<Failure,AyahDataEntity>> getHilaliAyahData({required int chapterNo,required int verseNo})async {
     if(networkInfo.isConnected){
       try{
-          final ayahDataHilaliEntity = await _hilaliAyahDataSource.getHilaliAyahData();
+          final ayahDataHilaliEntity = await _hilaliAyahDataSource.getHilaliAyahData(chapterNo: chapterNo,verseNo:verseNo);
           return Right(ayahDataHilaliEntity);
-      }on ServerException{
-        return Left(ServerFailure());
+      }catch(e){
+        return Left(ServerFailure(message: "Some error occured"));
       }
     }
     else{
-      return Left(ServerFailure());
+      print("in the else statementin trans repo impl");
+      return Left(ServerFailure(message: "Some error occured"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChapterListDataEntity>> getChapterListData() async {
+    if(networkInfo.isConnected){
+      try{
+        final chapterListData = await _hilaliAyahDataSource.getChapterListData();
+        return Right(chapterListData);
+      }catch(e){
+        return Left(ServerFailure(message: "Some error occured"));
+      }
+    }
+    else{
+      print("in the else statementin trans repo impl");
+      return Left(ServerFailure(message: "Some error occured"));
     }
   }
 
