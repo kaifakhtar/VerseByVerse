@@ -9,9 +9,8 @@ import '../../../../utils/colors.dart';
 import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
 import 'SelectChapterBottomSheet.dart';
-import 'bottom_sheet.dart';
 
-import 'drop_down_for_chapters.dart';
+
 
 class VerseCard extends StatefulWidget {
   const VerseCard({Key? key}) : super(key: key);
@@ -29,20 +28,19 @@ class _VerseCardState extends State<VerseCard> {
     super.initState();
     initializePref();
 
-
     verseEditingController = TextEditingController();
   }
 
-  void initializePref()async{
+  void initializePref() async {
     final hilaliAyahDataProvider =
-    Provider.of<HilaliAyahDataProvider>(context, listen: false);
+        Provider.of<HilaliAyahDataProvider>(context, listen: false);
     final prefs = await SharedPreferences.getInstance();
-    hilaliAyahDataProvider.chapterNo=prefs.getInt('chapter')??10;
-    hilaliAyahDataProvider.verseNo=prefs.getInt('verse')??10;
+    hilaliAyahDataProvider.chapterNo = prefs.getInt('chapter') ?? 10;
+    hilaliAyahDataProvider.verseNo = prefs.getInt('verse') ?? 10;
   }
 
   @override
-  void dispose()async {
+  void dispose() async {
     // TODO: implement dispose
     super.dispose();
 
@@ -60,14 +58,13 @@ class _VerseCardState extends State<VerseCard> {
 
     //final checkerTranslationNameViewModal = Provider.of<CheckerTranslationNameViewModal>(context);
     var cardHeight = screenHeight * (630 / 800);
-    var cardWidth = screenWidth * 0.9055;
     //hilaliTranslationDataViewModal = Provider.of<HilaliTranslationDataViewModal>(context);
 
     return Container(
       height: cardHeight,
       //width: cardWidth,
       child: Card(
-       // color: Color(0xff9055FF).withOpacity(.3),
+        // color: Color(0xff9055FF).withOpacity(.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
@@ -103,7 +100,7 @@ class _VerseCardState extends State<VerseCard> {
                     child: Container(
                       //width: 100.w,
                       // height: 40.h,
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Color(0xffDAE6FF),
                         borderRadius: BorderRadius.all(Radius.circular(12.r)),
                       ),
@@ -179,17 +176,23 @@ class _VerseCardState extends State<VerseCard> {
                       alignment: Alignment.center,
                       //width: screenWidth * (85 / 360),
                       //height: screenHeight * (34 / 800),
-                        decoration:  BoxDecoration(
-                          color: Color(0xffDAE6FF),
-                          borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                        ),
+                      decoration: BoxDecoration(
+                        color: Color(0xffDAE6FF),
+                        borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                      ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 8.w, vertical: 8.h),
                         child: Row(
                           children: [
-                            Icon(Icons.search,size: 16.h,color: AppColors.blueColor,),
-                            SizedBox(width: 8.w,),
+                            Icon(
+                              Icons.search,
+                              size: 16.h,
+                              color: AppColors.blueColor,
+                            ),
+                            SizedBox(
+                              width: 8.w,
+                            ),
                             Text(
                               "verse",
                               style: GoogleFonts.poppins(
@@ -212,15 +215,15 @@ class _VerseCardState extends State<VerseCard> {
                   : Expanded(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding:  EdgeInsets.only(top: 4.h),
+                          padding: EdgeInsets.only(top: 4.h),
                           child: Column(
                             children: [
                               Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Color(0xff6dfacd).withOpacity(.30),
-                                    borderRadius: BorderRadius.all(Radius.circular(12.r))
-                                ),
+                                    color: Color(0xff6dfacd).withOpacity(.30),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.r))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Text(
@@ -232,7 +235,7 @@ class _VerseCardState extends State<VerseCard> {
                                     style: TextStyle(
                                         fontFamily: 'Uthmani_font',
                                         fontWeight: FontWeight.w600,
-                                        color:Colors.black.withOpacity(0.6),
+                                        color: Colors.black.withOpacity(0.6),
                                         fontSize: 28.sp,
                                         height: 1.55),
                                   ),
@@ -245,7 +248,9 @@ class _VerseCardState extends State<VerseCard> {
                                 color: AppColors.blueColor.withOpacity(.12),
                                 thickness: 1.h,
                               ),
-                              SizedBox(height: 15.h,),
+                              SizedBox(
+                                height: 15.h,
+                              ),
                               Text(
                                 hilaliAyahDataProvider.ayahDataHilaliEntity
                                         ?.result?.translation ??
@@ -254,19 +259,23 @@ class _VerseCardState extends State<VerseCard> {
                                 textDirection: TextDirection.ltr,
                                 style: GoogleFonts.literata(
                                     fontWeight: FontWeight.w500,
-                                    color: const Color(0xff515151).withOpacity(.80),
+                                    color: const Color(0xff515151)
+                                        .withOpacity(.80),
                                     fontSize: 16.sp,
                                     height: 1.55),
                               ),
-                              
                               SizedBox(
                                 height: 32.h,
                               ),
-                              Text("Footnotes", style: GoogleFonts.literata(
-                                // fontWeight: FontWeight.w500,
-                                  color: const Color(0xff515151).withOpacity(.6),
-                                  fontSize: 12.sp,
-                                  height: 1.55),),
+                              Text(
+                                "Footnotes",
+                                style: GoogleFonts.literata(
+                                    // fontWeight: FontWeight.w500,
+                                    color:
+                                        const Color(0xff515151).withOpacity(.6),
+                                    fontSize: 12.sp,
+                                    height: 1.55),
+                              ),
                               SizedBox(
                                 height: 8.h,
                               ),
@@ -379,33 +388,39 @@ class _VerseCardState extends State<VerseCard> {
               ),
             ),
             actions: [
-              SizedBox(height: 5.h,),
+              SizedBox(
+                height: 5.h,
+              ),
               Center(
                 child: InkWell(
-                  onTap: ()=>Navigator.of(context).pop(verseEditingController.text),
+                  onTap: () =>
+                      Navigator.of(context).pop(verseEditingController.text),
                   child: Column(
                     children: [
                       Container(
                         alignment: Alignment.center,
                         height: 48.h,
                         width: 248.w,
-                        decoration:  BoxDecoration(
-                          color:  AppColors.blueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(12.r
-                          )),
-
+                        decoration: BoxDecoration(
+                          color: AppColors.blueColor,
+                          borderRadius: BorderRadius.all(Radius.circular(12.r)),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 34.5.w,),
-                          child: Text("Search",
-                            style: GoogleFonts.poppins(fontSize:
-                            16.sp,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 34.5.w,
+                          ),
+                          child: Text(
+                            "Search",
+                            style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
-                                color: const Color(0xffFFF3F3)
-                            ),),
+                                color: const Color(0xffFFF3F3)),
+                          ),
                         ),
                       ),
-                      SizedBox(height: 20.h,)
+                      SizedBox(
+                        height: 20.h,
+                      )
                     ],
                   ),
                 ),
