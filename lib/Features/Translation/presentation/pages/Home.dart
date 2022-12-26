@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 
 
+import '../manager/ChapterAndVerse_SharedPref_provider.dart';
 import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
 import '../widgets/next_verse_button.dart';
@@ -79,6 +80,9 @@ class _HomeState extends State<Home> {
       hilaliAyahDataProvider.getHilaliAyahDataEntity();
       final  chapterListAndDataProvider= Provider.of<ChapterListAndDataProvider>(context,listen: false);
       chapterListAndDataProvider.getchapterListDataEntity();
+      final chapterAndVerse_SharedPref_provider =
+      Provider.of<ChapterAndVerse_SharedPref_provider>(context, listen: false);
+      chapterAndVerse_SharedPref_provider.getChapterAndVerseFromSharedPref();
     });
 
 

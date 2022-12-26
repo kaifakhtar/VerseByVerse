@@ -33,7 +33,7 @@ class HilaliAyahDataSourceImpl implements HilaliAyahDataSource{
   }
 
   @override
-  Future<ChapterListDataEntity> getChapterListData() async {
+  Future<ChapterListDataModal> getChapterListData() async {
     final response = await client.get(Uri.parse('https://api.quran.com/api/v4/chapters?language=en'));
 
     if (response.statusCode == 200) {

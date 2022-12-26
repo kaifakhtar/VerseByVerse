@@ -67,6 +67,7 @@ class _VerseCardState extends State<VerseCard> {
       height: cardHeight,
       //width: cardWidth,
       child: Card(
+       // color: Color(0xff9055FF).withOpacity(.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),

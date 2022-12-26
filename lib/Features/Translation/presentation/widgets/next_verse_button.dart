@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:verse_by_verse/utils/colors.dart';
 
+import '../manager/ChapterAndVerse_SharedPref_provider.dart';
 import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
 
@@ -19,6 +20,8 @@ class NextVerseButton extends StatelessWidget {
     Provider.of<HilaliAyahDataProvider>(context, listen: true);
     final chapterListAndDataProvider =
     Provider.of<ChapterListAndDataProvider>(context, listen: true);
+    final chapterAndVerse_SharedPref_provider =
+    Provider.of<ChapterAndVerse_SharedPref_provider>(context, listen: true);
 
     return InkWell(
       onTap: (){
@@ -26,7 +29,8 @@ class NextVerseButton extends StatelessWidget {
           hilaliAyahDataProvider.changeChapter(chapterNumber: hilaliAyahDataProvider.chapterNo+1);
         }
         else {
-          hilaliAyahDataProvider.increaseVerseNo(); // condition check
+          hilaliAyahDataProvider.increaseVerseNo();
+          chapterAndVerse_SharedPref_provider.saveChAndVerseFromSharedPref(chapterNo: hilaliAyahDataProvider.chapterNo, verseNo: hilaliAyahDataProvider.verseNo);// condition check
         }
          },
       child: Container(alignment: Alignment.center,
