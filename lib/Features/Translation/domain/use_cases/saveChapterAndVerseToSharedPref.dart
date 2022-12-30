@@ -9,7 +9,7 @@ class SaveChapterAndVerseToSharedPref{
   SaveChapterAndVerseToSharedPref(this.chapterAndVerseRepo);
 
 
-  Future<void> call() async{
-    await chapterAndVerseRepo.getChapterAndVerseFromSharedPref();
+  Future<void> call({required int chapterNo,required int verseNo}) async{
+    await chapterAndVerseRepo.saveChapterAndVerseFromSharedPref(chapterNo: chapterNo, verseNo: verseNo);
   }
 }

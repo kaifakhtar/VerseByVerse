@@ -36,13 +36,20 @@ class _SelectChapterBottomSheetState extends State<SelectChapterBottomSheet> {
                   fontSize: 24.sp
                 ),
               ),
-              SizedBox(height: 16.h,),
+              SizedBox(height: 12.h,),
+              Divider(height: 0,
+              color:  Color(0xff4E576B),
+              thickness: .5.h,),
+
               Expanded(
-                child: ListView.builder(
-                    itemCount: chapterListAndDataProvider.chapterListDataEntity?.chapters?.length,
-                    itemBuilder: (context,index){
-                    return ChapterListTile(index);
-                }),
+                child: Padding(
+                  padding:  EdgeInsets.only(top:2.h),
+                  child: ListView.builder(
+                      itemCount: chapterListAndDataProvider.chapterListDataEntity?.chapters?.length,
+                      itemBuilder: (context,index){
+                      return ChapterListTile(index);
+                  }),
+                ),
               )
             ],
           ),

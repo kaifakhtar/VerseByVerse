@@ -10,8 +10,6 @@ import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
 import 'SelectChapterBottomSheet.dart';
 
-
-
 class VerseCard extends StatefulWidget {
   const VerseCard({Key? key}) : super(key: key);
 
@@ -26,17 +24,7 @@ class _VerseCardState extends State<VerseCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initializePref();
-
     verseEditingController = TextEditingController();
-  }
-
-  void initializePref() async {
-    final hilaliAyahDataProvider =
-        Provider.of<HilaliAyahDataProvider>(context, listen: false);
-    final prefs = await SharedPreferences.getInstance();
-    hilaliAyahDataProvider.chapterNo = prefs.getInt('chapter') ?? 10;
-    hilaliAyahDataProvider.verseNo = prefs.getInt('verse') ?? 10;
   }
 
   @override
@@ -48,7 +36,7 @@ class _VerseCardState extends State<VerseCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Container build(BuildContext context) {
     final chapterListAndDataProvider =
         Provider.of<ChapterListAndDataProvider>(context, listen: true);
     final hilaliAyahDataProvider =
@@ -57,7 +45,7 @@ class _VerseCardState extends State<VerseCard> {
     var screenWidth = MediaQuery.of(context).size.width;
 
     //final checkerTranslationNameViewModal = Provider.of<CheckerTranslationNameViewModal>(context);
-    var cardHeight = screenHeight * (630 / 800);
+    var cardHeight = screenHeight * (600 / 800);
     //hilaliTranslationDataViewModal = Provider.of<HilaliTranslationDataViewModal>(context);
 
     return Container(
@@ -68,10 +56,10 @@ class _VerseCardState extends State<VerseCard> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
-        elevation: 0,
+        elevation: 1,
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 22.w, vertical: cardHeight * (24 / cardHeight)),
+              horizontal: 12.w, vertical: cardHeight * (24 / cardHeight)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -138,15 +126,8 @@ class _VerseCardState extends State<VerseCard> {
               ),
               SizedBox(height: cardHeight * 0.025),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  GestureDetector(
-                    onTap: () => _showMyDialog(),
-                    child: Icon(
-                      Icons.info_outline,
-                      color: Colors.orange,
-                    ),
-                  ),
                   InkWell(
                     onTap: () async {
                       String? inputVerseNo = await openVerseInputDialog(
@@ -167,8 +148,8 @@ class _VerseCardState extends State<VerseCard> {
                                   .versesCount!
                                   .toInt() &&
                           int.parse(inputVerseNo) > 0) {
-                        hilaliAyahDataProvider.verseNo =
-                            int.parse(inputVerseNo);
+                        hilaliAyahDataProvider.setSpecificVerse(
+                            verse: int.parse(inputVerseNo));
                       }
                       verseEditingController.text = "";
                     },
@@ -221,7 +202,10 @@ class _VerseCardState extends State<VerseCard> {
                               Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                    color: Color(0xff6dfacd).withOpacity(.30),
+                                    color: Color(0xffCFEED9),
+                                    border: Border.all(
+                                        color:
+                                            Color(0xff22B152).withOpacity(.5)),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.r))),
                                 child: Padding(
@@ -229,13 +213,13 @@ class _VerseCardState extends State<VerseCard> {
                                   child: Text(
                                     hilaliAyahDataProvider.ayahDataHilaliEntity
                                             ?.result?.arabicText ??
-                                        "No data",
+                                        "Some error occurred, check your internet connection",
                                     softWrap: true,
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         fontFamily: 'Uthmani_font',
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black.withOpacity(0.6),
+                                        color: Colors.black.withOpacity(0.8),
                                         fontSize: 28.sp,
                                         height: 1.55),
                                   ),
@@ -244,48 +228,63 @@ class _VerseCardState extends State<VerseCard> {
                               SizedBox(
                                 height: 24.h,
                               ),
-                              Divider(
-                                color: AppColors.blueColor.withOpacity(.12),
-                                thickness: 1.h,
-                              ),
+                              // Divider(
+                              //   color: AppColors.blueColor.withOpacity(.12),
+                              //   thickness: 1.h,
+                              //   height: 0,
+                              // ),
                               SizedBox(
-                                height: 15.h,
+                                height: 24.h,
                               ),
                               Text(
-                                hilaliAyahDataProvider.ayahDataHilaliEntity
-                                        ?.result?.translation ??
-                                    "No data",
-                                softWrap: true,
-                                textDirection: TextDirection.ltr,
-                                style: GoogleFonts.literata(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xff515151)
-                                        .withOpacity(.80),
+                                "Translation",
+                                style: GoogleFonts.poppins(
+                                  // fontWeight: FontWeight.w500,
+                                    color:
+                                    const Color(0xff515151).withOpacity(.6),
                                     fontSize: 16.sp,
                                     height: 1.55),
+                              ),
+                              SizedBox(height: 8.h,),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    // color: Color(0xffBEE7CB),
+                                    border: Border.all(
+                                        color: Colors.grey.withOpacity(.5)),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.r))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    hilaliAyahDataProvider.ayahDataHilaliEntity
+                                            ?.result?.translation ??
+                                        "No data",
+                                    softWrap: true,
+                                    textDirection: TextDirection.ltr,
+                                    style: GoogleFonts.literata(
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff2e2e2e)
+                                            .withOpacity(.80),
+                                        fontSize: 16.sp,
+                                        height: 1.55),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 32.h,
                               ),
                               Text(
                                 "Footnotes",
-                                style: GoogleFonts.literata(
+                                style: GoogleFonts.poppins(
                                     // fontWeight: FontWeight.w500,
                                     color:
                                         const Color(0xff515151).withOpacity(.6),
-                                    fontSize: 12.sp,
+                                    fontSize: 16.sp,
                                     height: 1.55),
                               ),
                               SizedBox(
                                 height: 8.h,
-                              ),
-                              Divider(
-                                color: const Color(0xff515151).withOpacity(.12),
-                                height: 0,
-                                thickness: 1.h,
-                              ),
-                              SizedBox(
-                                height: 4.h,
                               ),
                               Text(
                                 hilaliAyahDataProvider.ayahDataHilaliEntity
@@ -295,16 +294,11 @@ class _VerseCardState extends State<VerseCard> {
                                 style: GoogleFonts.literata(
                                     // fontWeight: FontWeight.w500,
                                     color: const Color(0xff515151),
-                                    fontSize: 12.sp,
+                                    fontSize: 14.sp,
                                     height: 1.55),
                               ),
                               SizedBox(
                                 height: 8.h,
-                              ),
-                              Divider(
-                                color: const Color(0xff515151).withOpacity(.12),
-                                height: 0,
-                                thickness: 1.h,
                               ),
                             ],
                           ),
@@ -369,6 +363,75 @@ class _VerseCardState extends State<VerseCard> {
     );
   }
 
+  Future errorDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.r))),
+        child: Container(
+          height: 142.h,
+          width: 138.w,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffFEE8D8),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.r),
+                      topRight: Radius.circular(12.r)),
+                ),
+                height: 52.h,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 24.h,
+                        color: Color(0xffDD2F38),
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Text(
+                        "Uh! Some error occured",
+                        style: GoogleFonts.poppins(
+                            fontSize: 16.sp,
+                            color: Color(0xffDD2F38),
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Divider(
+                height: 0,
+                thickness: 1.h,
+                color: Color(0xffDD2F38),
+              ),
+              SizedBox(
+                height: 18.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 34.w),
+                child: Text(
+                  "Try checking your internet connection, Or try after some time.",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      color: Color(0xff636363),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<String?> openVerseInputDialog(BuildContext context, int maxVerses) {
     return showDialog<String>(
         context: context,
@@ -377,14 +440,18 @@ class _VerseCardState extends State<VerseCard> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12.r))),
             title: Text(
-              "Enter Verse number within ${maxVerses}",
+              "Verse search",
               style: GoogleFonts.poppins(color: const Color(0xff2B5BBB)),
             ),
             content: TextField(
+              autofocus: true,
+              keyboardType: TextInputType.number,
               controller: verseEditingController,
               decoration: InputDecoration(
-                hintText: "For eg. 2,   45 ...",
-                hintStyle: GoogleFonts.poppins(),
+                hintText: "Enter verse number within ${maxVerses}",
+                hintStyle: GoogleFonts.poppins(
+                  fontSize: 12.sp
+                ),
               ),
             ),
             actions: [
@@ -402,6 +469,15 @@ class _VerseCardState extends State<VerseCard> {
                         height: 48.h,
                         width: 248.w,
                         decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            stops: [.6,1],
+                            colors: [
+                              AppColors.blueColor,
+                              Color(0xff22B152),
+                            ],
+                          ),
                           color: AppColors.blueColor,
                           borderRadius: BorderRadius.all(Radius.circular(12.r)),
                         ),

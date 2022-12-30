@@ -1,8 +1,10 @@
 
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verse_by_verse/core/errors/failure.dart';
 
 
 import '../../domain/entities/Ayah_data_hilali_entity.dart';
@@ -13,19 +15,16 @@ class HilaliAyahDataProvider with ChangeNotifier{
   GetHilaliAyahData _getHilaliAyahData; // use case object
   bool isLoading= false;
   ChapterAndVerse_SharedPref_provider? chapterAndVerse_SharedPref_provider;
-  int _chapterNo=1;
-  int _verseNo=1 ;
+   int _chapterNo=55;
+   int _verseNo=5 ;
   AyahDataEntity? ayahDataHilaliEntity;
+  Either<Failure,AyahDataEntity>? ayahDataHilaliEntityORfailure;
 
-
+bool isFailureEntity=false;
 
   int get chapterNo => _chapterNo;
 
-  set chapterNo(int value) {
-    _chapterNo = value;
-    //_verseNo=1;
-    getHilaliAyahDataEntity();
-  }
+
 
   HilaliAyahDataProvider(this._getHilaliAyahData,this.chapterAndVerse_SharedPref_provider);
 
@@ -35,43 +34,33 @@ class HilaliAyahDataProvider with ChangeNotifier{
 
     isLoading=true;
     notifyListeners();
-    var ayahDataHilaliEntityORfailure=await _getHilaliAyahData.call(chapterNo: chapterNo,versoNo: verseNo);
+     ayahDataHilaliEntityORfailure=await _getHilaliAyahData.call(chapterNo: chapterNo,versoNo: verseNo);
     isLoading=false;
-    ayahDataHilaliEntity = ayahDataHilaliEntityORfailure.foldRight(null, (r, previous) => r);
+    ayahDataHilaliEntity = ayahDataHilaliEntityORfailure?.foldRight(null, (r, previous) => r);
+   //ayahDataHilaliEntityORfailure?.fold((l) => l, (r) => r);
 
-    print(ayahDataHilaliEntityORfailure.isRight());
-    print("Footnotes are down");
-    print(ayahDataHilaliEntity?.result?.footnotes) ;
+    // ayahDataHilaliEntityORfailure?.isLeft();
+    if(ayahDataHilaliEntityORfailure!=null){
+      if(ayahDataHilaliEntityORfailure!.isLeft()){
+        isFailureEntity=true;
+        notifyListeners();
+      }
+      else{isFailureEntity=false;notifyListeners();}
+    }
+    // print("Footnotes are down");
+    // print(ayahDataHilaliEntity?.result?.footnotes) ;
     notifyListeners();
   }
-  void increaseVerseNo(){
-    verseNo++;
-    saveData();
-    getHilaliAyahDataEntity();
-  }
-  void decreaseVerseNo(){
-    verseNo--;
-    saveData();
-    getHilaliAyahDataEntity();
-  }
+
+
 
   int get verseNo => _verseNo;
 
-  set verseNo(int value) {
-    _verseNo = value;
-    saveData();
-    getHilaliAyahDataEntity();
-  }
 
-  void changeChapter({required int chapterNumber}){
-    _chapterNo=chapterNumber;
-    _verseNo=1;
-    saveData();
-    getHilaliAyahDataEntity();
-  }
+
    static Future<int?> getChapterFromSharedPref()async{
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('chapter');
+    return prefs.getInt('chapter')!;
   }
  void saveData()async{
 
@@ -85,6 +74,41 @@ class HilaliAyahDataProvider with ChangeNotifier{
   _chapterNo =  await chapterAndVerse_SharedPref_provider?.chapterAndVerseEntity?.chapterNo??1;
   _verseNo = await chapterAndVerse_SharedPref_provider?.chapterAndVerseEntity?.VerseNo??1;
  }
+
+ void setChapterAndVerseFromSharedPref(int? ch, int? ver){
+    _chapterNo=ch??55;
+    _verseNo=ver??5;
+ }
+
+ void incrementVerseBy1(){
+    _verseNo++;
+    getHilaliAyahDataEntity();
+ }
+  void decrementVerseBy1(){
+    _verseNo--;
+    getHilaliAyahDataEntity();
+  }
+  void setSpecificVerse({required int verse}){
+    _verseNo=verse;
+    getHilaliAyahDataEntity();
+  }
+  void changeChapterAndResetVerseTo1({required int chapter}){
+
+    _chapterNo=chapter;
+    _verseNo=1;
+    getHilaliAyahDataEntity();
+  }
+  void decrementChapterBy1(){
+    _chapterNo--;
+    getHilaliAyahDataEntity();
+  }
+  void incrementChapterBy1(){
+    _chapterNo++;
+    getHilaliAyahDataEntity();
+  }
+
+
+
 
 
 }

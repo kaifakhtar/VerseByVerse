@@ -5,6 +5,7 @@ import 'package:verse_by_verse/Features/Translation/data/local/data_sources/gett
 import 'package:verse_by_verse/Features/Translation/data/repositories/ChapterAndVerseRepoImpl.dart';
 import 'package:verse_by_verse/Features/Translation/domain/use_cases/getChapterListAndData.dart';
 import 'package:verse_by_verse/Features/Translation/presentation/manager/ChapterListAndDataProvider.dart';
+import 'package:verse_by_verse/Features/Translation/presentation/pages/splash_screen.dart';
 
 import 'package:verse_by_verse/core/network/network_info.dart';
 
@@ -37,7 +38,7 @@ void main() {
       builder: (context , child) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        home: Home(),
+        home: SplashScreen(),
         theme: ThemeData(primaryColor: Color(0xff2B5BBB)),
     );}
   ),

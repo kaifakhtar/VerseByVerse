@@ -25,25 +25,36 @@ class NextVerseButton extends StatelessWidget {
 
     return InkWell(
       onTap: (){
+        if(hilaliAyahDataProvider.chapterNo<114){ // edge case 114
+
         if(hilaliAyahDataProvider.verseNo >= chapterListAndDataProvider.chapterListDataEntity!.chapters![hilaliAyahDataProvider.chapterNo - 1].versesCount!.toInt()){
-          hilaliAyahDataProvider.changeChapter(chapterNumber: hilaliAyahDataProvider.chapterNo+1);
+          hilaliAyahDataProvider.changeChapterAndResetVerseTo1(chapter: hilaliAyahDataProvider.chapterNo+1);
         }
-        else {
-          hilaliAyahDataProvider.increaseVerseNo();
+        else{
+          hilaliAyahDataProvider.incrementVerseBy1();
           chapterAndVerse_SharedPref_provider.saveChAndVerseFromSharedPref(chapterNo: hilaliAyahDataProvider.chapterNo, verseNo: hilaliAyahDataProvider.verseNo);// condition check
-        }
+        }}
          },
       child: Container(alignment: Alignment.center,
        // width: screenWidth*(154/screenWidth),
         height: 56.h,
         decoration:  BoxDecoration(
-          color:  AppColors.blueColor,
+          gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            stops: [.6,1],
+            colors: [
+              AppColors.blueColor,
+              Color(0xff22B152),
+            ],
+          ),
+          //color:  AppColors.blueColor,
             borderRadius: BorderRadius.all(Radius.circular(12.r
             )),
 
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 34.5.w),
+          padding: EdgeInsets.symmetric(horizontal: 40.w),
           child: Text("Next Verse",
           style: GoogleFonts.poppins(fontSize:
           16.sp,

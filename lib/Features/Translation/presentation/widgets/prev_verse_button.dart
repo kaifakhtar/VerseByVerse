@@ -23,15 +23,14 @@ class PrevVerseButton extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-
         if(hilaliAyahDataProvider.verseNo==1&&hilaliAyahDataProvider.chapterNo!=1){
-          hilaliAyahDataProvider.chapterNo--;
-          hilaliAyahDataProvider.verseNo=chapterListAndDataProvider.chapterListDataEntity!.chapters![hilaliAyahDataProvider.chapterNo - 1].versesCount!;
+          hilaliAyahDataProvider.decrementChapterBy1();
+          hilaliAyahDataProvider.setSpecificVerse(verse: chapterListAndDataProvider.chapterListDataEntity!.chapters![hilaliAyahDataProvider.chapterNo - 1].versesCount!);
         }else if(hilaliAyahDataProvider.verseNo==1&&hilaliAyahDataProvider.chapterNo==1){
 
         }
         else {
-          hilaliAyahDataProvider.decreaseVerseNo();
+          hilaliAyahDataProvider.decrementVerseBy1();
         }
       },
       child: Container(alignment: Alignment.center,
@@ -44,7 +43,7 @@ class PrevVerseButton extends StatelessWidget {
 
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 34.5.w),
+          padding: EdgeInsets.symmetric(horizontal:40.w),
           child: Text("Prev Verse",
             style: GoogleFonts.poppins(fontSize:
             16.sp,

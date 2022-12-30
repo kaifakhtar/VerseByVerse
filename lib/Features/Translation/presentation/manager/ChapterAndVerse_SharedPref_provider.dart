@@ -12,6 +12,8 @@ class ChapterAndVerse_SharedPref_provider with ChangeNotifier{
   GetChapterAndVerseFromSharedPref getChapterAndVerseFromSharedPref;
   SaveChapterAndVerseToSharedPref saveChapterAndVerseToSharedPref;
   ChapterAndVerseEntity? chapterAndVerseEntity;
+   int? chapterNo;
+ int? verseNo;
 
 
   ChapterAndVerse_SharedPref_provider(
@@ -19,13 +21,17 @@ class ChapterAndVerse_SharedPref_provider with ChangeNotifier{
       this.saveChapterAndVerseToSharedPref);
 
   Future<void> getChAndVerseFromSharedPref()async{
+
     chapterAndVerseEntityOrFailure=await getChapterAndVerseFromSharedPref.call();
     chapterAndVerseEntity = chapterAndVerseEntityOrFailure.foldRight(null, (r, previous) => r);
+    chapterNo=chapterAndVerseEntity?.chapterNo??2;
+    verseNo=chapterAndVerseEntity?.VerseNo??255;
+
     notifyListeners();
   }
 
   Future<void> saveChAndVerseFromSharedPref({required int chapterNo, required int verseNo})async {
 
-    await saveChapterAndVerseToSharedPref.call();
+    await saveChapterAndVerseToSharedPref.call(chapterNo: chapterNo,verseNo: verseNo);
   }
 }
