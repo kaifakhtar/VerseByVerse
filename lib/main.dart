@@ -5,9 +5,11 @@ import 'package:verse_by_verse/Features/Translation/data/local/data_sources/gett
 import 'package:verse_by_verse/Features/Translation/data/repositories/ChapterAndVerseRepoImpl.dart';
 import 'package:verse_by_verse/Features/Translation/domain/use_cases/getChapterListAndData.dart';
 import 'package:verse_by_verse/Features/Translation/presentation/manager/ChapterListAndDataProvider.dart';
+import 'package:verse_by_verse/Features/Translation/presentation/manager/theme_changer.dart';
 import 'package:verse_by_verse/Features/Translation/presentation/pages/splash_screen.dart';
 
 import 'package:verse_by_verse/core/network/network_info.dart';
+import 'package:verse_by_verse/utils/colors.dart';
 
 
 
@@ -30,16 +32,22 @@ void main() {
     ChangeNotifierProvider.value(value: HilaliAyahDataProvider(GetHilaliAyahData(TranslationRepositoryImpl(HilaliAyahDataSourceImpl(client: http.Client()), NetworkInfoImpl())),ChapterAndVerse_SharedPref_provider(GetChapterAndVerseFromSharedPref(ChapterAndVerseRepoImpl(GettingAndSavingChapterAndVerseBySharedPrefDataSourceIMPL(),NetworkInfoImpl())),SaveChapterAndVerseToSharedPref(ChapterAndVerseRepoImpl(GettingAndSavingChapterAndVerseBySharedPrefDataSourceIMPL(),NetworkInfoImpl()))))),
   ChangeNotifierProvider.value(value: ChapterListAndDataProvider(GetChapterListData(TranslationRepositoryImpl(HilaliAyahDataSourceImpl(client: http.Client()),NetworkInfoImpl())))),
   ChangeNotifierProvider.value(value: ChapterAndVerse_SharedPref_provider(GetChapterAndVerseFromSharedPref(ChapterAndVerseRepoImpl(GettingAndSavingChapterAndVerseBySharedPrefDataSourceIMPL(),NetworkInfoImpl())),SaveChapterAndVerseToSharedPref(ChapterAndVerseRepoImpl(GettingAndSavingChapterAndVerseBySharedPrefDataSourceIMPL(),NetworkInfoImpl())))),
+  ChangeNotifierProvider.value(value: ThemeChanger(ThemeMode.dark))
   ],
   child: ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context , child) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        theme: ThemeData(primaryColor: Color(0xff2B5BBB)),
+    return Builder(
+      builder:(context){
+        final themeChanger=Provider.of<ThemeChanger>(context);
+
+        return MaterialApp(
+        debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+          theme: ThemeData(primaryColor: Color(0xff2B5BBB)),
+      );}
     );}
   ),
   ));

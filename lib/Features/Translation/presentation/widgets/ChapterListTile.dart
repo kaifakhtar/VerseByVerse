@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:verse_by_verse/utils/colors.dart';
 
+import '../manager/ChapterAndVerse_SharedPref_provider.dart';
 import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
 
@@ -18,11 +19,12 @@ class ChapterListTile extends StatelessWidget {
         Provider.of<ChapterListAndDataProvider>(context, listen: true);
     final hilaliAyahDataProvider =
         Provider.of<HilaliAyahDataProvider>(context, listen: true);
-
+    final chapterAndVerse_SharedPref_provider =
+    Provider.of<ChapterAndVerse_SharedPref_provider>(context, listen: true);
     return InkWell(
       onTap: () {
         hilaliAyahDataProvider.changeChapterAndResetVerseTo1(chapter: index + 1);
-        //hilaliAyahDataProvider.verseNo=1;
+        chapterAndVerse_SharedPref_provider.saveChAndVerseFromSharedPref(chapterNo: hilaliAyahDataProvider.chapterNo, verseNo: hilaliAyahDataProvider.verseNo);
         Navigator.pop(context);
       },
       child: Container(
@@ -75,7 +77,7 @@ class ChapterListTile extends StatelessWidget {
                                 ?.chapters?[index].nameArabic ??
                             "No data",
                         style: GoogleFonts.poppins(
-                            fontSize: 12.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColors.blueColor),
                       )
@@ -93,7 +95,7 @@ class ChapterListTile extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Text(
-                    "Verses : ${chapterListAndDataProvider.chapterListDataEntity?.chapters?[index].versesCount}",
+                    "verses : ${chapterListAndDataProvider.chapterListDataEntity?.chapters?[index].versesCount}",
                     style: GoogleFonts.poppins(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w600,

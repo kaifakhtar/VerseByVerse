@@ -6,8 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verse_by_verse/Features/Translation/presentation/widgets/shimmer_loading.dart';
 
 import '../../../../utils/colors.dart';
+import '../manager/ChapterAndVerse_SharedPref_provider.dart';
 import '../manager/ChapterListAndDataProvider.dart';
 import '../manager/Hilali_ayah_data_provider.dart';
+import '../manager/theme_changer.dart';
 import 'SelectChapterBottomSheet.dart';
 
 class VerseCard extends StatefulWidget {
@@ -19,6 +21,7 @@ class VerseCard extends StatefulWidget {
 
 class _VerseCardState extends State<VerseCard> {
   late TextEditingController verseEditingController;
+  final ScrollController scrollController=ScrollController();
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _VerseCardState extends State<VerseCard> {
 
   @override
   Container build(BuildContext context) {
+    final themeChanger = Provider.of<ThemeChanger>(context);
     final chapterListAndDataProvider =
         Provider.of<ChapterListAndDataProvider>(context, listen: true);
     final hilaliAyahDataProvider =
@@ -52,7 +56,7 @@ class _VerseCardState extends State<VerseCard> {
       height: cardHeight,
       //width: cardWidth,
       child: Card(
-        // color: Color(0xff9055FF).withOpacity(.3),
+        color: themeChanger.isDark ? Color(0xff1e1e1e) : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
@@ -70,9 +74,11 @@ class _VerseCardState extends State<VerseCard> {
                   Text(
                     "${hilaliAyahDataProvider.chapterNo}:${hilaliAyahDataProvider.verseNo}",
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontSize: 24.sp,
-                        color: const Color(0xff2B5BBB)),
+                        color: themeChanger.isDark
+                            ? Color(0xff499CF2)
+                            : Color(0xff2B5BBB)),
                   ),
                   InkWell(
                     onTap: () {
@@ -85,222 +91,260 @@ class _VerseCardState extends State<VerseCard> {
                             return SelectChapterBottomSheet();
                           });
                     },
-                    child: Container(
-                      //width: 100.w,
-                      // height: 40.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xffDAE6FF),
-                        borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 8.h),
-                        child: Row(
-                          children: [
-                            Text(
-                              chapterListAndDataProvider
-                                      .chapterListDataEntity
-                                      ?.chapters?[
-                                          hilaliAyahDataProvider.chapterNo - 1]
-                                      .nameSimple ??
-                                  "No data",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xff2B5BBB)),
+                    child: Row(
+                      children: [
+                        Ink(
+                          //width: 100.w,
+                          // height: 40.h,
+                          decoration: BoxDecoration(
+                            color: themeChanger.isDark
+                                ? Color(0xff1e1e1e)
+                                : Color(0xffDAE6FF),
+                            borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.w, vertical: 8.h),
+                            child: Row(
+                              children: [
+                                Text(
+                                  chapterListAndDataProvider
+                                          .chapterListDataEntity
+                                          ?.chapters?[
+                                              hilaliAyahDataProvider.chapterNo - 1]
+                                          .nameSimple ??
+                                      "No data",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: themeChanger.isDark
+                                          ? Color(0xff499CF2)
+                                          : Color(0xff2B5BBB)),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Icon(Icons.keyboard_arrow_down,
+                                    size: 20.h,
+                                    color: themeChanger.isDark
+                                        ? Color(0xff499CF2)
+                                        : Color(0xff2B5BBB)),
+                              ],
                             ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_down,
-                              size: 20.h,
-                              color: const Color(0xff2B5BBB),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                        SizedBox(width: 8.w,),
+                        InkWell(
+                          onTap: () async {
+                            String? inputVerseNo = await openVerseInputDialog(
+                                context,
+                                chapterListAndDataProvider
+                                    .chapterListDataEntity!
+                                    .chapters![hilaliAyahDataProvider.chapterNo - 1]
+                                    .versesCount!
+                                    .toInt());
+                            if (inputVerseNo == null || inputVerseNo.isEmpty) {
+                              return;
+                            }
+                            if (int.parse(inputVerseNo) <=
+                                chapterListAndDataProvider
+                                    .chapterListDataEntity!
+                                    .chapters![
+                                hilaliAyahDataProvider.chapterNo - 1]
+                                    .versesCount!
+                                    .toInt() &&
+                                int.parse(inputVerseNo) > 0) {
+                              hilaliAyahDataProvider.setSpecificVerse(
+                                  verse: int.parse(inputVerseNo));
+                            }
+                            verseEditingController.text = "";
+                          },
+                          child: Ink(
+                            // alignment: Alignment.center,
+                            //width: screenWidth * (85 / 360),
+                            //height: screenHeight * (34 / 800),
+                            decoration: BoxDecoration(
+                              color: themeChanger.isDark
+                                  ? Color(0xff1e1e1e)
+                                  : Color(0xffDAE6FF),
+                              borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 8.h),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.search,
+                                      size: 16.h,
+                                      color: AppColors.blueColor,
+                                    ),
+                                    SizedBox(
+                                      width: 8.w,
+                                    ),
+                                    Text(
+                                      "verse",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12.sp,
+                                          color: themeChanger.isDark
+                                              ? Color(0xff499CF2)
+                                              : Color(0xff2B5BBB)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
+
                 ],
               ),
-              SizedBox(height: cardHeight * 0.025),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      String? inputVerseNo = await openVerseInputDialog(
-                          context,
-                          chapterListAndDataProvider
-                              .chapterListDataEntity!
-                              .chapters![hilaliAyahDataProvider.chapterNo - 1]
-                              .versesCount!
-                              .toInt());
-                      if (inputVerseNo == null || inputVerseNo.isEmpty) {
-                        return;
-                      }
-                      if (int.parse(inputVerseNo) <=
-                              chapterListAndDataProvider
-                                  .chapterListDataEntity!
-                                  .chapters![
-                                      hilaliAyahDataProvider.chapterNo - 1]
-                                  .versesCount!
-                                  .toInt() &&
-                          int.parse(inputVerseNo) > 0) {
-                        hilaliAyahDataProvider.setSpecificVerse(
-                            verse: int.parse(inputVerseNo));
-                      }
-                      verseEditingController.text = "";
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      //width: screenWidth * (85 / 360),
-                      //height: screenHeight * (34 / 800),
-                      decoration: BoxDecoration(
-                        color: Color(0xffDAE6FF),
-                        borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 8.h),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.search,
-                              size: 16.h,
-                              color: AppColors.blueColor,
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Text(
-                              "verse",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12.sp,
-                                  color: const Color(0xff2B5BBB)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
+              SizedBox(height: 24.h),
+
               hilaliAyahDataProvider.isLoading
                   ? const ShimmerEffect()
                   : Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 4.h),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffCFEED9),
-                                    border: Border.all(
-                                        color:
-                                            Color(0xff22B152).withOpacity(.5)),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.r))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    hilaliAyahDataProvider.ayahDataHilaliEntity
-                                            ?.result?.arabicText ??
-                                        "Some error occurred, check your internet connection",
-                                    softWrap: true,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        fontFamily: 'Uthmani_font',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black.withOpacity(0.8),
-                                        fontSize: 28.sp,
-                                        height: 1.55),
+                      child: Scrollbar(
+                        controller: scrollController,
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 4.h),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: themeChanger.isDark
+                                          ? Color(0xff252525)
+                                          : Color(0xffCFEED9),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //       color: Colors.grey,
+                                      //       blurRadius: 4.0,
+                                      //       offset: Offset(0, 0)),
+                                      // ],
+                                      // border: Border.all(
+                                      //     color: themeChanger.isDark
+                                      //         ? Color(0xff252525)
+                                      //         : Color(0xff22B152)
+                                      //             .withOpacity(.5)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.r))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(12.h),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          child: Text(
+                                            hilaliAyahDataProvider
+                                                    .ayahDataHilaliEntity
+                                                    ?.result
+                                                    ?.arabicText ??
+                                                "Some error occurred, check your internet connection",
+                                            softWrap: true,
+                                            textDirection: TextDirection.rtl,
+                                            style: TextStyle(
+                                                fontFamily: 'Uthmani_font',
+                                                //  fontWeight: FontWeight.w500,
+                                                color: themeChanger.isDark
+                                                    ? Colors.white.withOpacity(0.87)
+                                                    : Colors.black.withOpacity(0.8),
+                                                fontSize: 28.sp,
+                                                height: 1.55),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 16.h,
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.black.withOpacity(.60),
+                                                  blurRadius: 8.0,
+                                                  offset: Offset(0, 2)),
+                                            ],
+                                            color: Color(0xfff3fff9),
+                                            // border: Border.all(
+                                            //     color: Colors.grey.withOpacity(.5)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.r)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Text(
+                                              hilaliAyahDataProvider
+                                                      .ayahDataHilaliEntity
+                                                      ?.result
+                                                      ?.translation ??
+                                                  "No data",
+                                              softWrap: true,
+                                              textDirection: TextDirection.ltr,
+                                              style: GoogleFonts.lexend(
+                                                  fontWeight: FontWeight.w400,
+                                                  color: themeChanger.isDark
+                                                      ? Colors.white
+                                                          .withOpacity(0.60)
+                                                      : Color(0xff2e2e2e)
+                                                          .withOpacity(.80),
+                                                  fontSize: 16.sp,
+                                                  height: 1.55),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                              // Divider(
-                              //   color: AppColors.blueColor.withOpacity(.12),
-                              //   thickness: 1.h,
-                              //   height: 0,
-                              // ),
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                              Text(
-                                "Translation",
-                                style: GoogleFonts.poppins(
-                                  // fontWeight: FontWeight.w500,
-                                    color:
-                                    const Color(0xff515151).withOpacity(.6),
-                                    fontSize: 16.sp,
-                                    height: 1.55),
-                              ),
-                              SizedBox(height: 8.h,),
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    // color: Color(0xffBEE7CB),
-                                    border: Border.all(
-                                        color: Colors.grey.withOpacity(.5)),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.r))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    hilaliAyahDataProvider.ayahDataHilaliEntity
-                                            ?.result?.translation ??
-                                        "No data",
-                                    softWrap: true,
-                                    textDirection: TextDirection.ltr,
-                                    style: GoogleFonts.literata(
-                                        fontWeight: FontWeight.w500,
-                                        color: const Color(0xff2e2e2e)
-                                            .withOpacity(.80),
-                                        fontSize: 16.sp,
-                                        height: 1.55),
-                                  ),
+                                SizedBox(
+                                  height: 16.h,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 32.h,
-                              ),
-                              Text(
-                                "Footnotes",
-                                style: GoogleFonts.poppins(
-                                    // fontWeight: FontWeight.w500,
-                                    color:
-                                        const Color(0xff515151).withOpacity(.6),
-                                    fontSize: 16.sp,
-                                    height: 1.55),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Text(
-                                hilaliAyahDataProvider.ayahDataHilaliEntity
-                                        ?.result?.footnotes ??
-                                    "No data",
-                                softWrap: true,
-                                style: GoogleFonts.literata(
-                                    // fontWeight: FontWeight.w500,
-                                    color: const Color(0xff515151),
-                                    fontSize: 14.sp,
-                                    height: 1.55),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                            ],
+                                // Divider(
+                                //   color: AppColors.blueColor.withOpacity(.12),
+                                //   thickness: 1.h,
+                                //   height: 0,
+                                // ),
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                                Text(
+                                  "Footnotes",
+                                  style: GoogleFonts.poppins(
+                                      // fontWeight: FontWeight.w500,
+                                      color: themeChanger.isDark
+                                          ? Colors.white.withOpacity(0.30)
+                                          : Color(0xff515151).withOpacity(.6),
+                                      fontSize: 16.sp,
+                                      height: 1.55),
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text(
+                                  hilaliAyahDataProvider.ayahDataHilaliEntity
+                                          ?.result?.footnotes ??
+                                      "No data",
+                                  softWrap: true,
+                                  style: GoogleFonts.lexend(
+                                      // fontWeight: FontWeight.w500,
+                                      color: themeChanger.isDark
+                                          ? Colors.white.withOpacity(0.60)
+                                          : Color(0xff2e2e2e).withOpacity(.8),
+                                      fontSize: 12.sp,
+                                      height: 1.55),
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -433,6 +477,12 @@ class _VerseCardState extends State<VerseCard> {
   }
 
   Future<String?> openVerseInputDialog(BuildContext context, int maxVerses) {
+    final hilaliAyahDataProvider =
+        Provider.of<HilaliAyahDataProvider>(context, listen: false);
+
+    final chapterAndVerse_SharedPref_provider =
+        Provider.of<ChapterAndVerse_SharedPref_provider>(context,
+            listen: false);
     return showDialog<String>(
         context: context,
         builder: (context) {
@@ -449,9 +499,7 @@ class _VerseCardState extends State<VerseCard> {
               controller: verseEditingController,
               decoration: InputDecoration(
                 hintText: "Enter verse number within ${maxVerses}",
-                hintStyle: GoogleFonts.poppins(
-                  fontSize: 12.sp
-                ),
+                hintStyle: GoogleFonts.poppins(fontSize: 12.sp),
               ),
             ),
             actions: [
@@ -460,19 +508,21 @@ class _VerseCardState extends State<VerseCard> {
               ),
               Center(
                 child: InkWell(
-                  onTap: () =>
-                      Navigator.of(context).pop(verseEditingController.text),
+                  onTap: () {
+                    // chapterAndVerse_SharedPref_provider.saveChAndVerseFromSharedPref(chapterNo: hilaliAyahDataProvider.chapterNo, verseNo: hilaliAyahDataProvider.verseNo);// condition check
+                    Navigator.of(context).pop(verseEditingController.text);
+                  },
                   child: Column(
                     children: [
-                      Container(
-                        alignment: Alignment.center,
+                      Ink(
+                        //alignment: Alignment.center,
                         height: 48.h,
                         width: 248.w,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [.6,1],
+                            stops: [.6, 1],
                             colors: [
                               AppColors.blueColor,
                               Color(0xff22B152),
@@ -481,25 +531,32 @@ class _VerseCardState extends State<VerseCard> {
                           color: AppColors.blueColor,
                           borderRadius: BorderRadius.all(Radius.circular(12.r)),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 34.5.w,
-                          ),
-                          child: Text(
-                            "Search",
-                            style: GoogleFonts.poppins(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xffFFF3F3)),
+                        child: Ink(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 34.5.w,
+                              ),
+                              child: Text(
+                                "Search",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xffFFF3F3)),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      )
+                      // SizedBox(
+                      //   height: 20.h,
+                      // )
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 20.h,
               )
             ],
           );

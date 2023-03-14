@@ -81,9 +81,13 @@ bool isFailureEntity=false;
  }
 
  void incrementVerseBy1(){
+
+   if(chapterNo==114&&verseNo==6){}
+   else
+     {
     _verseNo++;
     getHilaliAyahDataEntity();
- }
+ }}
   void decrementVerseBy1(){
     _verseNo--;
     getHilaliAyahDataEntity();
@@ -93,11 +97,12 @@ bool isFailureEntity=false;
     getHilaliAyahDataEntity();
   }
   void changeChapterAndResetVerseTo1({required int chapter}){
-
+    if(chapterNo==114&&verseNo==6){}
+    else{
     _chapterNo=chapter;
     _verseNo=1;
     getHilaliAyahDataEntity();
-  }
+  }}
   void decrementChapterBy1(){
     _chapterNo--;
     getHilaliAyahDataEntity();
