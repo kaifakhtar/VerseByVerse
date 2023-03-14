@@ -255,7 +255,7 @@ class _VerseCardState extends State<VerseCard> {
                                                 color: themeChanger.isDark
                                                     ? Colors.white.withOpacity(0.87)
                                                     : Colors.black.withOpacity(0.8),
-                                                fontSize: 28.sp,
+                                                fontSize: 30.sp,
                                                 height: 1.55),
                                           ),
                                         ),
