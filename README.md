@@ -10,3 +10,6 @@ The app features the complete Quran text in Arabic, along with the translations 
 
 ### Verse-By-Verse Translation
 The app provides a verse-by-verse translation of the Quran text, making it easier for users to understand the meaning of each verse without getting caught up in the unnecessary details.
+
+### Contributing
+We welcome contributions to the VerseByVerse: Quran app. If you want to contribute to the development of the app, please create a pull request on the Github repository.
