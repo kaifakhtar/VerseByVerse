@@ -1,4 +1,4 @@
-# VerseByVerse: Quran
+# VerseByVerse : Quran
 VerseByVerse: Quran is a mobile application that provides a wonderful reading experience of the Quran and makes understanding the text and translation of the meaning of The Quran easier for users. This app features translations of Hilali & Muhsin Khan in English language only as now.
 
 ## Features
