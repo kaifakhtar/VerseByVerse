@@ -13,3 +13,6 @@ The app provides a verse-by-verse translation of the Quran text, making it easie
 
 ### Contributing
 We welcome contributions to the VerseByVerse: Quran app. If you want to contribute to the development of the app, please create a pull request on the Github repository.
+
+### Get the App on Play store
+[VerseByVerse : Quran](https://play.google.com/store/apps/details?id=com.sparkbrightest.versebyverse)
