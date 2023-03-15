@@ -1,16 +1,12 @@
-# verse_by_verse
+# VerseByVerse: Quran
+VerseByVerse: Quran is a mobile application that provides a wonderful reading experience of the Quran and makes understanding the text and translation of the meaning of The Quran easier for users. This app features translations of Hilali & Muhsin Khan in English language only as now.
 
-A new Flutter project.
+## Features
+User-Friendly Interface
+The VerseByVerse: Quran app is designed to be user-friendly with an intuitive interface that makes it easy to navigate. Users can easily access the Quran text, translations, and other features with just a few taps.
 
-## Getting Started
+### Quran Text and Translations
+The app features the complete Quran text in Arabic, along with the translations of Hilali & Muhsin Khann in English language only. 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Verse-By-Verse Translation
+The app provides a verse-by-verse translation of the Quran text, making it easier for users to understand the meaning of each verse without getting caught up in the unnecessary details.
