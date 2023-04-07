@@ -46,9 +46,9 @@ class _VerseCardState extends State<VerseCard> {
     final hilaliAyahDataProvider =
         Provider.of<HilaliAyahDataProvider>(context, listen: true);
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    var screenWidth = MediaQuery.of(context).size.width; 
 
-    //final checkerTranslationNameViewModal = Provider.of<CheckerTranslationNameViewModal>(context);
+    //final checkelrTranslationNameViewModal = Provider.of<CheckerTranslationNameViewModal>(context);
     var cardHeight = screenHeight * (600 / 800);
     //hilaliTranslationDataViewModal = Provider.of<HilaliTranslationDataViewModal>(context);
 

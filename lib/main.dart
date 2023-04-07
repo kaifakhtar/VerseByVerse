@@ -10,11 +10,6 @@ import 'package:verse_by_verse/Features/Translation/presentation/pages/splash_sc
 
 import 'package:verse_by_verse/core/network/network_info.dart';
 import 'package:verse_by_verse/utils/colors.dart';
-
-
-
-
-
 import 'Features/Translation/data/local/data_sources/getting_and_saving_ch_and_ver_from_shared_pref.dart';
 import 'Features/Translation/data/remote/data_sources/HilaliAyahDataSourceImpl.dart';
 import 'Features/Translation/data/repositories/translation_repository_impl.dart';
