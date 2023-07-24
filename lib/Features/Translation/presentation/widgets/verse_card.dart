@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +23,7 @@ class VerseCard extends StatefulWidget {
 
 class _VerseCardState extends State<VerseCard> {
   late TextEditingController verseEditingController;
-  final ScrollController scrollController=ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -80,6 +82,7 @@ class _VerseCardState extends State<VerseCard> {
                             ? Color(0xff499CF2)
                             : Color(0xff2B5BBB)),
                   ),
+                 
                   InkWell(
                     onTap: () {
                       showModalBottomSheet(
@@ -100,7 +103,8 @@ class _VerseCardState extends State<VerseCard> {
                             color: themeChanger.isDark
                                 ? Color(0xff1e1e1e)
                                 : Color(0xffDAE6FF),
-                            borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.r)),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -111,7 +115,8 @@ class _VerseCardState extends State<VerseCard> {
                                   chapterListAndDataProvider
                                           .chapterListDataEntity
                                           ?.chapters?[
-                                              hilaliAyahDataProvider.chapterNo - 1]
+                                              hilaliAyahDataProvider.chapterNo -
+                                                  1]
                                           .nameSimple ??
                                       "No data",
                                   style: GoogleFonts.poppins(
@@ -133,26 +138,30 @@ class _VerseCardState extends State<VerseCard> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 8.w,),
+                        SizedBox(
+                          width: 8.w,
+                        ),
                         InkWell(
                           onTap: () async {
                             String? inputVerseNo = await openVerseInputDialog(
                                 context,
                                 chapterListAndDataProvider
                                     .chapterListDataEntity!
-                                    .chapters![hilaliAyahDataProvider.chapterNo - 1]
+                                    .chapters![
+                                        hilaliAyahDataProvider.chapterNo - 1]
                                     .versesCount!
                                     .toInt());
                             if (inputVerseNo == null || inputVerseNo.isEmpty) {
                               return;
                             }
                             if (int.parse(inputVerseNo) <=
-                                chapterListAndDataProvider
-                                    .chapterListDataEntity!
-                                    .chapters![
-                                hilaliAyahDataProvider.chapterNo - 1]
-                                    .versesCount!
-                                    .toInt() &&
+                                    chapterListAndDataProvider
+                                        .chapterListDataEntity!
+                                        .chapters![
+                                            hilaliAyahDataProvider.chapterNo -
+                                                1]
+                                        .versesCount!
+                                        .toInt() &&
                                 int.parse(inputVerseNo) > 0) {
                               hilaliAyahDataProvider.setSpecificVerse(
                                   verse: int.parse(inputVerseNo));
@@ -167,7 +176,8 @@ class _VerseCardState extends State<VerseCard> {
                               color: themeChanger.isDark
                                   ? Color(0xff1e1e1e)
                                   : Color(0xffDAE6FF),
-                              borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.r)),
                             ),
                             child: Center(
                               child: Padding(
@@ -201,11 +211,9 @@ class _VerseCardState extends State<VerseCard> {
                       ],
                     ),
                   ),
-
                 ],
               ),
               SizedBox(height: 24.h),
-
               hilaliAyahDataProvider.isLoading
                   ? const ShimmerEffect()
                   : Expanded(
@@ -238,7 +246,29 @@ class _VerseCardState extends State<VerseCard> {
                                   child: Padding(
                                     padding: EdgeInsets.all(12.h),
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            _copyToClipboard();
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.copy,
+                                            color: Colors.black38,
+                                            size: 16
+                                                .r, // Adjust the icon size as needed
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 16.h,
+                                        ),
                                         Container(
                                           width: double.infinity,
                                           child: Text(
@@ -253,8 +283,10 @@ class _VerseCardState extends State<VerseCard> {
                                                 fontFamily: 'Uthmani_font',
                                                 //  fontWeight: FontWeight.w500,
                                                 color: themeChanger.isDark
-                                                    ? Colors.white.withOpacity(0.87)
-                                                    : Colors.black.withOpacity(0.8),
+                                                    ? Colors.white
+                                                        .withOpacity(0.87)
+                                                    : Colors.black
+                                                        .withOpacity(0.8),
                                                 fontSize: 28.sp,
                                                 height: 1.55),
                                           ),
@@ -267,7 +299,8 @@ class _VerseCardState extends State<VerseCard> {
                                           decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Colors.black.withOpacity(.60),
+                                                  color: Colors.black
+                                                      .withOpacity(.60),
                                                   blurRadius: 8.0,
                                                   offset: Offset(0, 2)),
                                             ],
@@ -279,13 +312,13 @@ class _VerseCardState extends State<VerseCard> {
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(12.0),
-                                            child: Text(
+                                            child: SelectableText(
                                               hilaliAyahDataProvider
                                                       .ayahDataHilaliEntity
                                                       ?.result
                                                       ?.translation ??
                                                   "No data",
-                                              softWrap: true,
+                                              //softWrap: true,
                                               textDirection: TextDirection.ltr,
                                               style: GoogleFonts.lexend(
                                                   fontWeight: FontWeight.w400,
@@ -561,5 +594,37 @@ class _VerseCardState extends State<VerseCard> {
             ],
           );
         });
+  }
+
+void _copyToClipboard() {
+  final hilaliAyahDataProvider =
+      Provider.of<HilaliAyahDataProvider>(context, listen: false);
+
+  final String arabicText =
+      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.arabicText ?? '';
+  final String translation =
+      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.translation ?? '';
+  final String footnotes =
+      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.footnotes ?? '';
+
+  // Add Unicode bidirectional formatting characters for proper LTR and RTL handling
+  final String allText = '\u202B$arabicText\u202C\n\n\u202A$translation\u202C\n\n\u202AFootnotes: $footnotes';
+
+  Clipboard.setData(ClipboardData(text: allText));
+  _showToast("Copied");
+}
+
+
+  void _showToast(String message) {
+
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT, // Set the duration (SHORT or LONG)
+      gravity: ToastGravity.BOTTOM, // Set the position (TOP, CENTER, or BOTTOM)
+      backgroundColor: Colors.grey[800], // Customize the background color
+      textColor: Colors.white, // Customize the text color
+      fontSize: 14.0, // Customize the font size
+    );
+    debugPrint('Showing toast: $message');
   }
 }

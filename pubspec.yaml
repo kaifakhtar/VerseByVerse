@@ -27,32 +27,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cupertino_icons: ^1.0.2
+  dartz: ^0.10.1
+  dropdown_button2: ^1.9.2
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  google_fonts: ^3.0.1
-  provider: ^6.0.4
-  dropdown_button2: ^1.9.2
-  shimmer: ^2.0.0
-  rename: ^2.0.1
-  dartz: ^0.10.1
-  http: ^0.13.5
   flutter_screenutil: ^5.6.0
-  shared_preferences: ^2.0.15
+  fluttertoast: ^8.2.2
+  google_fonts: ^3.0.1
+  http: ^0.13.5
+  provider: ^6.0.4
+  rename: ^2.0.1
   share_plus: 5.0.0
+  shared_preferences: ^2.0.15
+  shimmer: ^2.0.0
   simple_gradient_text: 1.2.4
 #  internet_connection_checker: ^1.0.0+1
 #  connectivity_plus: ^3.0.2
-
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   flutter_launcher_icons: "^0.11.0"
+  flutter_test:
+    sdk: flutter
 
 flutter_icons:
   android: "launcher_icon"
@@ -80,7 +76,6 @@ flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -93,13 +88,10 @@ flutter:
   assets:
     - asset/final_icon_vbv.png
 
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -108,7 +100,7 @@ flutter:
   fonts:
     - family: Uthmani_font
       fonts:
-       - asset: fonts/Uthmanic_Script_HAFS_Regular.ttf
+        - asset: fonts/Uthmanic_Script_HAFS_Regular.ttf
     - family: Uthmani_font_naksh
       fonts:
         - asset: fonts/me_quran_Regular.ttf
