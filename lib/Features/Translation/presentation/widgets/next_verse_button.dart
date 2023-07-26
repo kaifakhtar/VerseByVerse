@@ -60,7 +60,7 @@ class NextVerseButton extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 40.w),
             child: Text(
-              "Next ayah",
+              "Next Ayah",
               style: GoogleFonts.poppins(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w600,

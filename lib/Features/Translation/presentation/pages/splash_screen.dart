@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: 44.h,),
             GradientText(
-              'VerseByVerse : Quran',
+              'BitByBit : Quran',
               style: GoogleFonts.poppins(
                 fontSize: 28.sp,
                 fontWeight: FontWeight.w700

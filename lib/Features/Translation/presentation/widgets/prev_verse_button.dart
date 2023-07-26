@@ -50,7 +50,7 @@ class PrevVerseButton extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal:40.w),
-            child: Text("Prev ayah",
+            child: Text("Prev Ayah",
               style: GoogleFonts.poppins(fontSize:
               16.sp,
                   fontWeight: FontWeight.w600,

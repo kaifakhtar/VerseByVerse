@@ -82,7 +82,6 @@ class _VerseCardState extends State<VerseCard> {
                             ? Color(0xff499CF2)
                             : Color(0xff2B5BBB)),
                   ),
-                 
                   InkWell(
                     onTap: () {
                       showModalBottomSheet(
@@ -194,7 +193,7 @@ class _VerseCardState extends State<VerseCard> {
                                       width: 8.w,
                                     ),
                                     Text(
-                                      "verse",
+                                      "Ayah",
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12.sp,
@@ -360,11 +359,11 @@ class _VerseCardState extends State<VerseCard> {
                                 SizedBox(
                                   height: 8.h,
                                 ),
-                                Text(
+                                SelectableText(
                                   hilaliAyahDataProvider.ayahDataHilaliEntity
                                           ?.result?.footnotes ??
                                       "No data",
-                                  softWrap: true,
+                                //  softWrap: true,
                                   style: GoogleFonts.lexend(
                                       // fontWeight: FontWeight.w500,
                                       color: themeChanger.isDark
@@ -523,7 +522,7 @@ class _VerseCardState extends State<VerseCard> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12.r))),
             title: Text(
-              "Verse search",
+              "Ayah search",
               style: GoogleFonts.poppins(color: const Color(0xff2B5BBB)),
             ),
             content: TextField(
@@ -531,7 +530,7 @@ class _VerseCardState extends State<VerseCard> {
               keyboardType: TextInputType.number,
               controller: verseEditingController,
               decoration: InputDecoration(
-                hintText: "Enter verse number within ${maxVerses}",
+                hintText: "Enter Ayah number within ${maxVerses}",
                 hintStyle: GoogleFonts.poppins(fontSize: 12.sp),
               ),
             ),
@@ -596,27 +595,34 @@ class _VerseCardState extends State<VerseCard> {
         });
   }
 
-void _copyToClipboard() {
-  final hilaliAyahDataProvider =
-      Provider.of<HilaliAyahDataProvider>(context, listen: false);
+  void _copyToClipboard() {
+    final hilaliAyahDataProvider =
+        Provider.of<HilaliAyahDataProvider>(context, listen: false);
+    final chapterListAndDataProvider =
+        Provider.of<ChapterListAndDataProvider>(context, listen: false);
+    final String arabicText =
+        hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.arabicText ?? '';
+    final String surahText = chapterListAndDataProvider.chapterListDataEntity
+            ?.chapters?[hilaliAyahDataProvider.chapterNo - 1].nameSimple ??
+        "No data";
+    final String translation =
+        hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.translation ?? '';
+    final String footnotes =
+        hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.footnotes ?? '';
+    final String translationInfo =
+        "English - Mohsin Khan/Taqi-ud-Din-al-Hilali";
 
-  final String arabicText =
-      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.arabicText ?? '';
-  final String translation =
-      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.translation ?? '';
-  final String footnotes =
-      hilaliAyahDataProvider.ayahDataHilaliEntity?.result?.footnotes ?? '';
+    final String appUrl =
+        'https://play.google.com/store/apps/details?id=com.sparkbrightest.versebyverse';
+    // Add Unicode bidirectional formatting characters for proper LTR and RTL handling
+    final String allText =
+        '$surahText  ${hilaliAyahDataProvider.chapterNo}:${hilaliAyahDataProvider.verseNo}\n\n\u202B$arabicText\u202C\n\n\u202A$translation\u202C\n\n\u202AFootnotes: $footnotes\n\n$translationInfo\n\nGet BitByBit:Quran app\n$appUrl';
 
-  // Add Unicode bidirectional formatting characters for proper LTR and RTL handling
-  final String allText = '\u202B$arabicText\u202C\n\n\u202A$translation\u202C\n\n\u202AFootnotes: $footnotes';
-
-  Clipboard.setData(ClipboardData(text: allText));
-  _showToast("Copied");
-}
-
+    Clipboard.setData(ClipboardData(text: allText));
+    _showToast("Copied");
+  }
 
   void _showToast(String message) {
-
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT, // Set the duration (SHORT or LONG)

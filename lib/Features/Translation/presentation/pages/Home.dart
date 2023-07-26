@@ -66,16 +66,22 @@ class _HomeState extends State<Home> {
             InkWell(
               onTap: () async {
                 await Share.share(''
-                    'Check this amazing app, where we can learn Quran easily and understand the meanings without any distractions'
+                    'Check this Quran app, where we can learn Quran with translations of the meaning focussing ayah by ayah, easily and understand the meanings without any distractions'
                     '\n\nhttps://play.google.com/store/apps/details?id=com.sparkbrightest.versebyverse');
               },
               child: Container(
                 height: 28.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: themeChanger.isDark
-                        ? Color(0xff1e1e1e)
-                        : Color(0xff539055)),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFFD4AF37), // Start color
+                      Colors.white // End color
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
@@ -84,12 +90,10 @@ class _HomeState extends State<Home> {
                       Text(
                         "Be a part of continuous charity",
                         style: GoogleFonts.poppins(
-                            color: themeChanger.isDark
-                                ? Color.fromARGB(255, 210, 218, 233)
-                                    .withOpacity(.87)
-                                : Color.fromARGB(255, 24, 64, 143),
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600),
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Container(
                         alignment: Alignment.center,
@@ -100,11 +104,12 @@ class _HomeState extends State<Home> {
                             Text(
                               "Share",
                               style: GoogleFonts.poppins(
-                                  fontSize: 12.sp,
-                                  color: themeChanger.isDark
-                                      ? Color(0xffFFE5BF).withOpacity(.87)
-                                      : Color(0xff43609b),
-                                  fontWeight: FontWeight.w600),
+                                fontSize: 12.sp,
+                                color: themeChanger.isDark
+                                    ? Color(0xFFFFE5BF).withOpacity(.87)
+                                    : Color(0xFF43609b),
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             SizedBox(
                               width: 4.w,
@@ -112,9 +117,7 @@ class _HomeState extends State<Home> {
                             Icon(
                               Icons.share,
                               size: 12.h,
-                              color: themeChanger.isDark
-                                  ? Color(0xffFFE5BF).withOpacity(.87)
-                                  : AppColors.blueColor,
+                              color: AppColors.blueColor,
                             )
                           ],
                         ),
