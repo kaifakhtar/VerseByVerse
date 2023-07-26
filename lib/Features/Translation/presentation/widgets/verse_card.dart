@@ -24,7 +24,7 @@ class VerseCard extends StatefulWidget {
 class _VerseCardState extends State<VerseCard> {
   late TextEditingController verseEditingController;
   final ScrollController scrollController = ScrollController();
-
+//
   @override
   void initState() {
     // TODO: implement initState
