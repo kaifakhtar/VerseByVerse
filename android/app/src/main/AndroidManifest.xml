@@ -2,7 +2,7 @@
     package="com.example.verse_by_verse">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="VerseByVerse"
+        android:label="BitByBit Quran"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

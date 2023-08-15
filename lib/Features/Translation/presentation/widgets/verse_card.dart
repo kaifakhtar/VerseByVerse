@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verse_by_verse/Features/Translation/presentation/widgets/reciters_drop_down.dart';
 import 'package:verse_by_verse/Features/Translation/presentation/widgets/shimmer_loading.dart';
 
 import '../../../../utils/colors.dart';
@@ -300,8 +301,9 @@ class _VerseCardState extends State<VerseCard> {
                                               BoxShadow(
                                                   color: Colors.black
                                                       .withOpacity(.60),
-                                                  blurRadius: 8.0,
-                                                  offset: Offset(0, 2)),
+                                                  blurRadius: 4.r,
+                                                  // spreadRadius: 8,
+                                                  offset: Offset(0, 2.h)),
                                             ],
                                             color: Color(0xfff3fff9),
                                             // border: Border.all(
@@ -310,7 +312,7 @@ class _VerseCardState extends State<VerseCard> {
                                                 Radius.circular(12.r)),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(12.0),
+                                            padding: EdgeInsets.all(12.h),
                                             child: SelectableText(
                                               hilaliAyahDataProvider
                                                       .ayahDataHilaliEntity
@@ -326,11 +328,14 @@ class _VerseCardState extends State<VerseCard> {
                                                           .withOpacity(0.60)
                                                       : Color(0xff2e2e2e)
                                                           .withOpacity(.80),
-                                                  fontSize: 16.sp,
+                                                  fontSize: 14.sp,
                                                   height: 1.55),
                                             ),
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: 8,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -363,7 +368,7 @@ class _VerseCardState extends State<VerseCard> {
                                   hilaliAyahDataProvider.ayahDataHilaliEntity
                                           ?.result?.footnotes ??
                                       "No data",
-                                //  softWrap: true,
+                                  //  softWrap: true,
                                   style: GoogleFonts.lexend(
                                       // fontWeight: FontWeight.w500,
                                       color: themeChanger.isDark

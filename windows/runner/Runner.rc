@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "verse_by_verse" "\0"
+            VALUE "FileDescription", "BitByBit Quran" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "verse_by_verse" "\0"
+            VALUE "InternalName", "BitByBit Quran" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "verse_by_verse.exe" "\0"
-            VALUE "ProductName", "verse_by_verse" "\0"
+            VALUE "ProductName", "BitByBit Quran" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
